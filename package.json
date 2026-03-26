@@ -1,0 +1,33 @@
+{
+  "name": "upstat-mcp",
+  "version": "1.0.1",
+  "description": "MCP Server for UpStat - uptime monitoring",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "upstat-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "mcp",
+    "uptime",
+    "monitoring",
+    "upstat"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "zod": "^4.3.6"
+  }
+}
