@@ -1,10 +1,16 @@
 # upstat-mcp
 
-Servidor MCP para o [UpStat](https://upstat.online) — monitore seu uptime direto pelo Claude Desktop.
+**MCP (Model Context Protocol) server** for [UpStat](https://upstat.online) —
+manage your uptime monitoring directly from Claude Desktop (or any
+MCP-compatible client).
 
-## Instalação
+With this server installed, you can talk to your UpStat account in natural
+language: list monitors, create new ones, trigger pings, inspect incidents,
+and pull uptime history — without ever opening the dashboard.
 
-Adicione no seu `claude_desktop_config.json`:
+## Installation
+
+Add the following to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -13,42 +19,42 @@ Adicione no seu `claude_desktop_config.json`:
       "command": "npx",
       "args": ["-y", "upstat-mcp"],
       "env": {
-        "UPSTAT_API_KEY": "sua-api-key"
+        "UPSTAT_API_KEY": "your-api-key"
       }
     }
   }
 }
 ```
 
-Gere sua API key em [upstat.online](https://upstat.online) → Integrações → API Keys.
+Generate an API key at [upstat.online](https://upstat.online) → Integrations → API Keys.
 
-## Ferramentas disponíveis
+## Available tools
 
-| Ferramenta           | Descrição                  |
-| -------------------- | -------------------------- |
-| `get_monitors`       | Lista todos os monitores   |
-| `get_monitor`        | Detalhes de um monitor     |
-| `create_monitor`     | Cria um novo monitor       |
-| `update_monitor`     | Atualiza um monitor        |
-| `delete_monitor`     | Remove um monitor          |
-| `toggle_monitor`     | Pausa ou ativa um monitor  |
-| `ping_now`           | Força um ping imediato     |
-| `get_pings`          | Histórico de pings         |
-| `get_incidents`      | Lista incidentes           |
-| `get_uptime_history` | Histórico de uptime diário |
+| Tool                 | Description                          |
+| -------------------- | ------------------------------------ |
+| `get_monitors`       | List all monitors                    |
+| `get_monitor`        | Get details for a single monitor     |
+| `create_monitor`     | Create a new monitor                 |
+| `update_monitor`     | Update an existing monitor           |
+| `delete_monitor`     | Delete a monitor                     |
+| `toggle_monitor`     | Pause or resume a monitor            |
+| `ping_now`           | Trigger an immediate ping            |
+| `get_pings`          | Fetch ping history                   |
+| `get_incidents`      | List incidents                       |
+| `get_uptime_history` | Get daily uptime history             |
 
-## Exemplos de uso
+## Example prompts
 
-> "Quais monitores eu tenho no UpStat?"
+> "Which monitors do I have on UpStat?"
 
-> "Cria um monitor para https://meusite.com.br"
+> "Create a monitor for https://mysite.com"
 
-> "Minha API teve algum incidente recentemente?"
+> "Has my API had any incidents recently?"
 
-> "Pausa o monitor do frontend"
+> "Pause the frontend monitor"
 
-> "Faz um ping agora no monitor de produção"
+> "Ping the production monitor right now"
 
-## Licença
+## License
 
 MIT
