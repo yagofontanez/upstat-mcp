@@ -8,21 +8,36 @@ export class UpstatClient {
   }
 
   private async request(path: string, options: RequestInit = {}) {
-    const res = await fetch(`${BASE_URL}${path}`, {
-      ...options,
-      headers: {
-        Authorization: `Bearer ${this.apiKey}`,
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-    });
+    // Timeout de 15s pra não deixar o MCP travado se o backend ficar lento —
+    // Claude/Cursor mostra "still running..." indefinidamente sem isso.
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15_000);
 
-    if (!res.ok) {
-      const error = await res.text();
-      throw new Error(`UpStat API error ${res.status}: ${error}`);
+    try {
+      const res = await fetch(`${BASE_URL}${path}`, {
+        ...options,
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+      });
+
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(`UpStat API error ${res.status}: ${error}`);
+      }
+
+      return res.json();
+    } catch (err) {
+      if (err instanceof Error && err.name === "AbortError") {
+        throw new Error(`UpStat API timeout (15s) em ${path}`);
+      }
+      throw err;
+    } finally {
+      clearTimeout(timer);
     }
-
-    return res.json();
   }
 
   async getMonitors() {
